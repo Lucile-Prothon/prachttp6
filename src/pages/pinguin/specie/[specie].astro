@@ -1,0 +1,55 @@
+---
+import penguins from "../../../assets/penguins.json";
+import Layout from "../../../layouts/Layout.astro";
+import PlotFigure from "../../../components/PlotFigure.astro";
+import * as Plot from "@observablehq/plot";
+
+export const prerender = false;
+
+const { specie } = Astro.params;
+const filteredPenguins = penguins.filter((penguin) => penguin.species === specie);
+const species = [...new Set(penguins.map((penguin) => penguin.species))].sort();
+const currentSpeciesIndex = species.indexOf(specie ?? "");
+const nextSpecie =
+  currentSpeciesIndex >= 0 ? species[currentSpeciesIndex + 1] : undefined;
+
+const plotOptions = {
+  grid: true,
+  marks: [
+    Plot.dot(filteredPenguins, {
+      x: "culmen_length_mm",
+      y: "culmen_depth_mm",
+      stroke: "species",
+      r: 4,
+      fillOpacity: 0.7,
+    }),
+  ],
+  x: {
+    label: "Longueur du bec (mm)",
+  },
+  y: {
+    label: "Profondeur du bec (mm)",
+  },
+  title: `Dimensions du bec : ${specie}`,
+};
+---
+
+<Layout>
+  <h1 class="m-3 text-2xl font-bold">Pingouins de l'espèce {specie}</h1>
+  <p class="m-3 text-lg">{filteredPenguins.length} pingouin(s) trouvé(s) pour l'espèce {specie}</p>
+
+  <div class="m-3">
+    <PlotFigure options={plotOptions} />
+  </div>
+
+  {
+    nextSpecie !== undefined && (
+      <a
+        href={`/pinguin/specie/${nextSpecie}`}
+        class="m-3 inline-block rounded bg-green-800 px-4 py-2 text-white hover:bg-green-700"
+      >
+        Graphique suivant ({nextSpecie})
+      </a>
+    )
+  }
+</Layout>

@@ -1,0 +1,62 @@
+---
+import penguins from "../assets/penguins.json";
+import PlotFigure from "./PlotFigure.astro";
+import * as Plot from "@observablehq/plot";
+
+interface Props {
+  chartIndex: number;
+  nextHref: string;
+  nextLabel: string;
+}
+
+const { chartIndex, nextHref, nextLabel } = Astro.props;
+const charts = [
+  {
+    title: "Longueur et profondeur du bec",
+    x: "culmen_length_mm",
+    y: "culmen_depth_mm",
+    xLabel: "Longueur du bec (mm)",
+    yLabel: "Profondeur du bec (mm)",
+  },
+  {
+    title: "Longueur des nageoires et masse corporelle",
+    x: "flipper_length_mm",
+    y: "body_mass_g",
+    xLabel: "Longueur des nageoires (mm)",
+    yLabel: "Masse corporelle (g)",
+  },
+  {
+    title: "Longueur du bec et masse corporelle",
+    x: "culmen_length_mm",
+    y: "body_mass_g",
+    xLabel: "Longueur du bec (mm)",
+    yLabel: "Masse corporelle (g)",
+  },
+];
+const chart = charts[chartIndex];
+
+const plotOptions = {
+  grid: true,
+  marks: [
+    Plot.dot(penguins, {
+      x: chart.x,
+      y: chart.y,
+      stroke: "species",
+    }),
+  ],
+  x: { label: chart.xLabel },
+  y: { label: chart.yLabel },
+  title: chart.title,
+};
+---
+
+<h1 class="m-3 text-2xl font-bold">Pingouins : {chart.title}</h1>
+<div class="m-3">
+  <PlotFigure options={plotOptions} />
+</div>
+<a
+  href={nextHref}
+  class="m-3 inline-block rounded bg-green-800 px-4 py-2 text-white hover:bg-green-700"
+>
+  Graphique suivant : {nextLabel}
+</a>

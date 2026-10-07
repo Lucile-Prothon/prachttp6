@@ -13,10 +13,19 @@ import "../styles/global.css";
   <body>
     <nav class="m-3 flex flex-wrap items-center gap-3">
       <a
+        href="/"
+        class="inline-block rounded bg-green-800 px-4 py-2 text-white hover:bg-green-700">Accueil</a>
+      <a
         href="/cars/year"
-        class="inline-block rounded bg-green-600 px-4 py-2 text-white hover:bg-green-700"
+        class="inline-block rounded bg-green-800 px-4 py-2 text-white hover:bg-green-700"
       >
         Voiture par année
+      </a>
+      <a
+        href="/pinguin/specie"
+        class="inline-block rounded bg-green-800 px-4 py-2 text-white hover:bg-green-700"
+      >
+        Pingouins par espèce
       </a>
     </nav>
     <slot />
