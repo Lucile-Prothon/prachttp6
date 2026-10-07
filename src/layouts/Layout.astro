@@ -1,7 +1,6 @@
 ---
 import "../styles/global.css";
 ---
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -12,6 +11,14 @@ import "../styles/global.css";
     <title>Astro Basics</title>
   </head>
   <body>
+    <nav class="m-3 flex flex-wrap items-center gap-3">
+      <a
+        href="/cars/year"
+        class="inline-block rounded bg-green-600 px-4 py-2 text-white hover:bg-green-700"
+      >
+        Voiture par année
+      </a>
+    </nav>
     <slot />
   </body>
 </html>

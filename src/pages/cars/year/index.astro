@@ -1,0 +1,24 @@
+---
+import cars from "../../../assets/cars.json";
+import Layout from "../../../layouts/Layout.astro";
+
+const years = [...new Set(cars.map((car) => car.year))].sort((a, b) => a - b);
+---
+
+<Layout>
+  <h1 class="m-3 text-2xl font-bold">Voitures par année</h1>
+  <ul class="m-3 flex flex-wrap gap-3 list-none p-0">
+    {
+      years.map((year) => (
+        <li>
+          <a
+            href={`/cars/year/${year}`}
+            class="inline-block rounded bg-green-800 px-4 py-2 text-white hover:bg-green-700"
+          >
+            {year}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</Layout>
